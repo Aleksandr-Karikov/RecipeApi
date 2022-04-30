@@ -1,0 +1,33 @@
+.wrap {
+    display: flex;
+    margin: 20px 0;
+    border: 1px solid #000;
+    border-radius: 5px;
+    .image {
+        width: 320px;
+        padding: 10px
+    }
+    .info {
+        padding-left: 20px;
+        .title {
+            font-size: 20px;
+        }
+        .likes {
+            color: red;
+            font-size: 15px;
+        }
+        .link {
+            background-color: rgb(189, 231, 238);
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgb(160, 51, 118);
+            border-radius: 10px;
+            cursor: pointer;
+            &:active {
+                background-color: rgb(80, 57, 212)
+            }
+        }
+    }
+}
