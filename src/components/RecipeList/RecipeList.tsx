@@ -9,12 +9,17 @@ interface RecipeListComponentI {
 const RecipeList: FC<RecipeListComponentI> = ({ recipes }) => {
     return (
         <div className={classes.wrap}>
-            {
-                recipes.map((item) => {
-                    return (
-                        <Recipe recipe={item} key={item.id}></Recipe>
-                    )
-                })
+            {recipes.length
+                ? <div>
+                    {
+                        recipes.map((item) => {
+                            return (
+                                <Recipe recipe={item} key={item.id}></Recipe>
+                            )
+                        })
+                    }
+                </div>
+                : <div className={classes.empty}>Список пуст</div>
             }
         </div>
     )

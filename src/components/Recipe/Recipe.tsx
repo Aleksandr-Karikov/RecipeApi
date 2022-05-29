@@ -1,8 +1,9 @@
 import React, { FC } from 'react'
 import recipeI from 'interfaces/recipe';
 import classes from './Styles.module.scss';
-import Image from 'next/image'
 import Link from 'next/link'
+import A from "../UI/A/A";
+
 interface RecipeComponentI {
     recipe: recipeI
 }
@@ -15,14 +16,9 @@ const Recipe: FC<RecipeComponentI> = ({ recipe }) => {
                 <div className={classes.title}>
                     {recipe.title}
                 </div>
-                <div className={classes.likes}>
-                    Likes {recipe.likes}
-                </div>
-                <Link href='#'>
-                    <div className={classes.link}>
-                        Перейти к рецепту
-                    </div>
-                </Link>
+                <A href={"#"} className={classes.link}>
+                    Перейти к рецепту
+                </A>
 
             </div>
         </div>

@@ -2,6 +2,8 @@ export default interface recipeI {
     id: number;
     title: string;
     image: string;
-    unusedIngredients: [];
-    likes: number;
+    carbs: string;
+    fat:string;
+    protein:string;
+    calories: number;
 }

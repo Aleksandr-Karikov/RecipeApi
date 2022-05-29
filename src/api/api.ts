@@ -26,7 +26,6 @@ const api = <T extends ApiI>(params: T) => new Promise<any>((resolve, reject) =>
         ctx,
     } = params;
     variables['apiKey'] = '9291a4c129d14a66bad3452fa2ae5066';
-    console.log(variables);
 
     axios({
         url: `${defaults.baseURL}${url}`,

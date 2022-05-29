@@ -1,14 +1,18 @@
 .wrap {
     display: flex;
+    justify-content: space-between;
     margin: 20px 0;
     border: 1px solid #000;
     border-radius: 5px;
+    padding: 10px;
     .image {
-        width: 320px;
-        padding: 10px
+        width: 50%;
     }
     .info {
-        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
+        width: 45%;
+        justify-content: space-between;
         .title {
             font-size: 20px;
         }
@@ -17,14 +21,11 @@
             font-size: 15px;
         }
         .link {
+            text-align: center;
             background-color: rgb(189, 231, 238);
-            height: 180px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            height: 25px;
             border: 1px solid rgb(160, 51, 118);
             border-radius: 10px;
-            cursor: pointer;
             &:active {
                 background-color: rgb(80, 57, 212)
             }
