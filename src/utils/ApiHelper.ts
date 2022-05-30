@@ -23,5 +23,13 @@ class apiHelper {
         });
         return res
     }
+
+    static async getRecipeById(id:string,includeNutrition:boolean = false) {
+        const res = await api.get({
+            url: `/recipes/${id}`,
+            variables: { includeNutrition }
+        });
+        return res
+    }
 }
 export default apiHelper
