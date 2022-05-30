@@ -6,20 +6,34 @@ import {filterI} from "../../interfaces/filters";
 import apiHelper from "../../utils/ApiHelper";
 import recipeI from "../../interfaces/recipe";
 import {ingredientI} from "../../interfaces/ingredirnt";
+import {debounce} from "lodash";
+import {closePreloader, openPreloader} from "../../utils/preloader";
 
 interface FilterComponentI {
     onFilterChange:(filter:filterI)=>void;
-    refresh:()=>void
 }
 
 const Filter:FC<FilterComponentI> = (props) => {
-    const {onFilterChange,refresh} = props;
+    const {onFilterChange} = props;
     const [filter,setFilter] = useState<filterI>({});
     const [searchByRecipe,setSearchByRecipe] = useState<recipeI[]>([]);
     const [searchByIngredients,setSearchByIngredients] = useState<ingredientI[]>([]);
 
+    const debouncedUpdateSearchByIngredients = React.useRef(
+        debounce(async (value:string) => {
+            const variants = await apiHelper.ingredientsAutocomplete(value);
+            setSearchByIngredients(variants)
+        }, 300)
+    ).current;
+
+    const debouncedUpdateSearchByRecipe = React.useRef(
+        debounce (async (value:string) => {
+            const variants = await apiHelper.autocomplete(value);
+            setSearchByRecipe(variants)
+        }, 300)
+    ).current;
+
     useEffect(()=>{
-        refresh();
         onFilterChange(filter);
     },[filter])
 
@@ -38,14 +52,6 @@ const Filter:FC<FilterComponentI> = (props) => {
         setFilter({...filter,maxCalories:value});
     }
 
-    const updateSearchByIngredients = async (value:string) => {
-        const variants = await apiHelper.ingredientsAutocomplete(value);
-        setSearchByIngredients(variants)
-    }
-    const updateSearchRecipes = async (value:string) => {
-        const variants = await apiHelper.autocomplete(value);
-        setSearchByRecipe(variants)
-    }
     return (
     <form onSubmit={async (e) => {
         e.preventDefault();
@@ -54,7 +60,7 @@ const Filter:FC<FilterComponentI> = (props) => {
             <SearchInput
                 placeholder={'Найти рецепт'}
                 variants={searchByRecipe}
-                onInputChange={e => updateSearchRecipes(e.target.value)}
+                onInputChange={e => debouncedUpdateSearchByRecipe(e.target.value)}
                 onActiveChange={(active) => {
                     setQuery(active);
                 }}
@@ -64,7 +70,7 @@ const Filter:FC<FilterComponentI> = (props) => {
                 variants={searchByIngredients.map((item) => {
                     return {id: item.id, title: item.name}
                 })}
-                onInputChange={e => updateSearchByIngredients(e.target.value)}
+                onInputChange={e => debouncedUpdateSearchByIngredients(e.target.value)}
                 onActiveChange={(active) => {
                     setIngredients(active)
                 }}

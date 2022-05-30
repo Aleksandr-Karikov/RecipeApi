@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import { NextPageContext } from 'next';
 
 const defaults = {
-    baseURL: `https://api.spoonacular.com/recipes`,
+    baseURL: `https://api.spoonacular.com`,
     error: {
         code: 'INTERNAL_ERROR',
         message: 'Что-то пошло не так, проверьте соединение с интерентом',
