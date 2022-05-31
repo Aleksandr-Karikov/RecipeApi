@@ -15,20 +15,23 @@ const Index = () => {
   const [areRecipesLoading,setAreRecipesLoading] = useState(false);
   const lastBlock = useRef<HTMLDivElement>(null);
   const [filter,setFilter] = useState<filterI>({});
-
-  useObserver(lastBlock,()=>setPage(page+1),areRecipesLoading,!!recipes.length);
+  const [canLoad,setCanLoad] = useState<boolean>(true);
+  useObserver(lastBlock,()=>setPage(page+1),areRecipesLoading,canLoad);
 
   const clear = () => {
     setRecipes([]);
     setPage(0);
+    setCanLoad(true)
   }
 
   const debouncedUpdateRecipeList = React.useRef(
       debounce(async (filter:filterI, page:number,withRefresh:boolean = false) => {
+        if (withRefresh) clear();
         setAreRecipesLoading(true)
         openPreloader();
         const recipesData = await apiHelper.complexSearch(filter,page*10);
         setAreRecipesLoading(false)
+        if (!recipesData.length)  setCanLoad(false)
         setRecipes([...recipes,...recipesData]);
         closePreloader();
       }, 300)
