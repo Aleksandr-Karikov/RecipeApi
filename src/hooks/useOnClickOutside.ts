@@ -5,12 +5,11 @@ const useOnClickOutside = (
     isListening: boolean,
     handler: () => any,
 ) => {
-    const $mouseCurrentRef = useRef(null);
-
+    const $mouseCurrentRef = useRef<EventTarget | null>();
     useEffect(() => {
-        const handleMouseDown = (event: MouseEvent) => {
-            // @ts-ignore
+        const handleMouseDown = (event: MouseEvent ) => {
             $mouseCurrentRef.current = event.target;
+            // @ts-ignore
             if (!$ref?.current?.contains($mouseCurrentRef.current)) {
                 handler();
             }

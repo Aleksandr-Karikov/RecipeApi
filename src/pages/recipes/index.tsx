@@ -19,23 +19,19 @@ const Index = () => {
   useObserver(lastBlock,()=>setPage(page+1),areRecipesLoading,canLoad);
 
   const clear = () => {
-    setRecipes([]);
     setPage(0);
     setCanLoad(true)
   }
 
-  const debouncedUpdateRecipeList = React.useRef(
-      debounce(async (filter:filterI, page:number,withRefresh:boolean = false) => {
-        if (withRefresh) clear();
+  const debouncedUpdateRecipeList = debounce(async (filter:filterI, page:number,oldList = recipes) => {
         setAreRecipesLoading(true)
         openPreloader();
         const recipesData = await apiHelper.complexSearch(filter,page*10);
         setAreRecipesLoading(false)
         if (!recipesData.length)  setCanLoad(false)
-        setRecipes([...recipes,...recipesData]);
+        setRecipes([...oldList,...recipesData]);
         closePreloader();
       }, 300)
-  ).current;
 
   useEffect(() => {
     return () => {
@@ -45,11 +41,12 @@ const Index = () => {
 
 
   useEffect(()=>{
+    clear();
     debouncedUpdateRecipeList(filter,page);
   },[page])
 
   useEffect(()=>{
-    debouncedUpdateRecipeList(filter,page,true);
+    debouncedUpdateRecipeList(filter,page,[]);
   },[filter])
 
   return (
