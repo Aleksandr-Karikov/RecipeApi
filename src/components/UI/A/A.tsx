@@ -5,7 +5,7 @@ import cl from './Styles.module.scss'
 interface linkI {
     href:string,
     children: React.ReactElement | string,
-    className:string
+    className?:string
 }
 
 const A:FC<linkI & React.HTMLProps<HTMLAnchorElement>> = (props) => {

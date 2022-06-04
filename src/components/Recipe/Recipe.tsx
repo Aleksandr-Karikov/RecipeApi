@@ -16,7 +16,7 @@ const Recipe: FC<RecipeComponentI> = ({ recipe }) => {
                 <div className={classes.title}>
                     {recipe.title}
                 </div>
-                <A href={`/[${recipe.id}]`} className={classes.link}>
+                <A href={`recipes/${recipe.id}`} className={classes.link}>
                     Перейти к рецепту
                 </A>
 

@@ -1,16 +1,15 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
+import React, { MutableRefObject, useEffect, useRef } from 'react';
 
 const useOnClickOutside = (
-    $ref: React.MutableRefObject<null>,
+    $ref: React.MutableRefObject<HTMLElement>,
     isListening: boolean,
     handler: () => any,
 ) => {
-    const $mouseCurrentRef = useRef<EventTarget | null>();
+    const $mouseCurrentRef = useRef<Node | null>();
     useEffect(() => {
         const handleMouseDown = (event: MouseEvent ) => {
-            $mouseCurrentRef.current = event.target;
-            // @ts-ignore
-            if (!$ref?.current?.contains($mouseCurrentRef.current)) {
+            $mouseCurrentRef.current = event.target as Node;
+            if (!($ref?.current?.contains($mouseCurrentRef.current))){
                 handler();
             }
         };

@@ -26,7 +26,7 @@ class apiHelper {
 
     static async getRecipeById(id:string,includeNutrition:boolean = false) {
         const res = await api.get({
-            url: `/recipes/${id}`,
+            url: `/recipes/${id}/information`,
             variables: { includeNutrition }
         });
         return res
