@@ -17,7 +17,7 @@ interface SearchI {
 
 const SearchInput:FC<SearchI> = (props) => {
     const {onActiveChange,onInputChange,variants,placeholder} = props;
-    const $refWrap = useRef(null);
+    const $refWrap = useRef() as React.MutableRefObject<HTMLInputElement>;
     const [opened,setOpened] = useState(false);
 
     const toggle = () => {
